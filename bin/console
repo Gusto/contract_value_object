@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'irb'
+require 'irb/completion'
+require 'bundler/setup'
+Bundler.require
+
+require 'contract_value_object'
+
+class Truck < ContractValueObject
+  class Wheel < ContractValueObject
+    attributes(
+      size: Enum[:xs, :s, :m, :l, :xl],
+    )
+  end
+
+  attributes(
+    wheels: ArrayOf[Wheel],
+    color: Enum[:red, :white, :blue],
+    model: String,
+  )
+end
+
+IRB.start
