@@ -1,0 +1,3 @@
+release:
+  host: https://gemstash.zp-int.com/private/
+  key: gemstash
