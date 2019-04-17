@@ -1,6 +1,6 @@
 require 'contracts'
 require 'contract_value_object/definition_error'
-require 'contract_value_object/attribute_errors'
+require 'contract_value_object/error_formatter'
 
 class ContractValueObject
   include Contracts
@@ -41,7 +41,7 @@ class ContractValueObject
 
     Contract RespondTo[:contract_failure, :missing, :unexpected]
     def error_presenter
-      @error_presenter ||= self::AttributeErrors.new
+      @error_presenter ||= self::ErrorFormatter.new
     end
   end
 
@@ -52,17 +52,20 @@ class ContractValueObject
     defaults = self.class.defaults
     error_message_class = DefinitionError::ErrorMessage
 
+    # determine attributes that were not passed in but should have been
     missing_attributes = class_attributes.keys - attributes.keys - defaults.keys
     missing_attribute_errors = missing_attributes.flat_map do |attribute|
       next([]) if class_attributes[attribute].is_a?(Contracts::Optional)
       error_message_class.new(attribute, error_presenter.missing(attribute, class_attributes.fetch(attribute)))
     end
 
+    # determine extraneous attributes that should not have been passed in
     unexpected_attributes = attributes.keys - class_attributes.keys
     unexpected_attribute_errors = unexpected_attributes.map do |attribute|
       error_message_class.new(attribute, error_presenter.unexpected(attribute))
     end
 
+    # set attributes on the object and raise if they do not obey the contract
     setter_errors = defaults.merge(attributes).flat_map do |attribute, value|
       next([]) if unexpected_attributes.include?(attribute)
 
