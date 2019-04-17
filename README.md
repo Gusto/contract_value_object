@@ -1,6 +1,10 @@
 # Contract Value Object
 
-Validate that your objects have the right inputs.
+Contract value object are designed for two purposes:
+1. To create objects that act like values (in the same way that two ruby `Date` objects are the same if their year, month, and date are the same)
+2. That values can only be created with correct values. That means that no invalid value types should be able to exist.
+
+It's implemented on top of the [Contracts gem](http://egonschiele.github.io/contracts.ruby/) that allows us to define the accepted values for each attribute.
 
 ## Installation
 
@@ -20,11 +24,13 @@ Or install it yourself as:
 
 ## Usage
 
-Example usage:
+There are two main methods that are exposed when constructing a Contract Value Object:
+- `attributes` - allows you to define all of the attributes that you expect to be passed in
+  - input: hash, where the keys are the names of the attributes and the keys are the contract that must be met
+- `defaults` - allows you to define the default values that will be set if a value will not be passed in. All of these should explicitly `Optional` contracts in the attributes.
+  - input: hash, where the keys are the attributes that should be default and the keys are the default values
 
-Contract value object are designed for two purposes:
-1. To create objects that act like values (in the same way that two ruby `Date` objects are the same if their year, month, and date are the same)
-2. That values can only be created with correct types.
+Example usage:
 
 ```ruby
 class Truck < ContractValueObject
@@ -51,7 +57,6 @@ Truck.new(
   model: 'Ford F150',
 )
 ```
-
 
 ## Development
 

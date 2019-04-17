@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe ContractValueObject::AttributeErrors do
+RSpec.describe ContractValueObject::ErrorFormatter do
   let(:presenter) { described_class.new }
 
   describe '#contract_failure' do

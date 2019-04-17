@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    contract_value_object (0.0.2)
+    contract_value_object (0.0.3)
       contracts
 
 GEM

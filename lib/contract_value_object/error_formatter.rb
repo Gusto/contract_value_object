@@ -1,5 +1,5 @@
 class ContractValueObject
-  class AttributeErrors
+  class ErrorFormatter
     include Contracts
 
     Contract Symbol, Any, Any => String
