@@ -1,6 +1,40 @@
 require 'spec_helper'
 
 RSpec.describe ContractValueObject do
+  describe 'definition' do
+    subject { klass }
+
+    context 'when calling attributes without having defined them' do
+      let(:klass) { Class.new(described_class) { attributes } }
+
+      it do
+        expect { subject }.to raise_error(ArgumentError, 'Calling for attributes without having defined them.')
+      end
+    end
+
+    context 'when setting defaults that are not part of the attributes' do
+      let(:klass) do
+        Class.new(described_class) do
+          attributes(elephant_seal: String)
+          defaults(walrus: Contracts::Optional[String])
+        end
+      end
+
+      it { expect { subject }.to raise_error(ArgumentError, 'Unexpected defaults are set: walrus') }
+    end
+
+    context 'when setting defaults that are not optionals' do
+      let(:klass) do
+        Class.new(described_class) do
+          attributes(elephant_seal: String)
+          defaults(elephant_seal: String)
+        end
+      end
+
+      it { expect { subject }.to raise_error(ArgumentError, 'Unexpected non-optional defaults: elephant_seal') }
+    end
+  end
+
   describe '#initialize' do
     subject { klass.new(attributes) }
 
