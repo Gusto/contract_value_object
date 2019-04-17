@@ -1,8 +1,6 @@
 # Contract Value Object
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/contract_value_object`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Validate that your objects have the right inputs.
 
 ## Installation
 
@@ -22,7 +20,38 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: add the usage
+Example usage:
+
+Contract value object are designed for two purposes:
+1. To create objects that act like values (in the same way that two ruby `Date` objects are the same if their year, month, and date are the same)
+2. That values can only be created with correct types.
+
+```ruby
+class Truck < ContractValueObject
+  class Wheel < ContractValueObject
+    attributes(
+      size: Optional[Enum[:xs, :s, :m, :l, :xl]],
+    )
+
+    defaults(
+      size: :m,
+    )
+  end
+
+  attributes(
+    wheels: ArrayOf[Wheel],
+    color: Enum[:red, :white, :blue],
+    model: String,
+  )
+end
+
+Truck.new(
+  wheels: [Truck::Wheel.new, Truck::Wheel.new, Truck::Wheel.new, Truck::Wheel.new],
+  color: :red,
+  model: 'Ford F150',
+)
+```
+
 
 ## Development
 

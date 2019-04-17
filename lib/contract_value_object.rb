@@ -26,7 +26,7 @@ class ContractValueObject
 
       unexpected_defaults = defaults.keys - attributes.keys
       unless unexpected_defaults.empty?
-        raise ArgumentError, "Unexpected defaults are set: #{unexpected_defaults.values.map(&:to_s).join(', ')}"
+        raise ArgumentError, "Unexpected defaults are set: #{unexpected_defaults.map(&:to_s).join(', ')}"
       end
 
       non_optional = defaults.select do |attribute, _|
@@ -45,37 +45,41 @@ class ContractValueObject
     end
   end
 
+  Contract HashOf[Symbol, Any] => Any
   def initialize(**attributes)
     error_presenter = self.class.error_presenter
     class_attributes = self.class.attributes
     defaults = self.class.defaults
+    error_message_class = DefinitionError::ErrorMessage
 
     missing_attributes = class_attributes.keys - attributes.keys - defaults.keys
     missing_attribute_errors = missing_attributes.flat_map do |attribute|
       next([]) if class_attributes[attribute].is_a?(Contracts::Optional)
-      DefinitionError::ErrorMessage.new(attribute, error_presenter.missing(attribute, class_attributes.fetch(attribute)))
+      error_message_class.new(attribute, error_presenter.missing(attribute, class_attributes.fetch(attribute)))
     end
 
     unexpected_attributes = attributes.keys - class_attributes.keys
     unexpected_attribute_errors = unexpected_attributes.map do |attribute|
-      DefinitionError::ErrorMessage.new(attribute, error_presenter.unexpected(attribute))
+      error_message_class.new(attribute, error_presenter.unexpected(attribute))
     end
 
     setter_errors = defaults.merge(attributes).flat_map do |attribute, value|
       next([]) if unexpected_attributes.include?(attribute)
 
       begin
-        contract = class_attributes[attribute]
+        contract = class_attributes.fetch(attribute)
         contract.within_opt_hash! if contract.is_a?(Contracts::Optional)
+        # begin support customized setter
         send("#{attribute}=", value)
         set_value = instance_variable_get("@#{attribute}")
+        # end support for customized setter
         if Contract.valid?(set_value, contract)
           []
         else
           raise ArgumentError, error_presenter.contract_failure(attribute, set_value, contract)
         end
       rescue StandardError => error
-        DefinitionError::ErrorMessage.new(attribute, error.message)
+        error_message_class.new(attribute, error.message)
       end
     end
 
@@ -93,6 +97,7 @@ class ContractValueObject
     key_value_pairs.to_h
   end
 
+  # treating contract value objects with the same values as the same object for hashes and sets
   def hash
     to_h.hash
   end
