@@ -8,7 +8,7 @@ The inspiration for the value object part is taken from [Martin Fowler's discuss
 It's implemented on top of the [Contracts gem](http://egonschiele.github.io/contracts.ruby/) that allows us to define the accepted values for each attribute.
 
 In other words it's much like this GIF: 
-![Contract + Value Object => ContractValueObject](https://media3.giphy.com/media/BHeCjdyGJck6c/source.gif width=250)
+![Contract + Value Object => ContractValueObject](https://media3.giphy.com/media/BHeCjdyGJck6c/source.gif)
 
 ## Installation
 
