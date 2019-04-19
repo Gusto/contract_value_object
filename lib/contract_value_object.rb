@@ -81,6 +81,8 @@ class ContractValueObject
         else
           raise ArgumentError, error_presenter.contract_failure(attribute, set_value, contract)
         end
+      rescue self.class::DefinitionError => error
+        error_message_class.new(attribute, error.message.gsub("\n", "\n\t"))
       rescue StandardError => error
         error_message_class.new(attribute, error.message)
       end
