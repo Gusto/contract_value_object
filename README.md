@@ -2,13 +2,13 @@
 
 Contract value object are designed for two purposes:
 1. To create objects that act like values (in the same way that two ruby `Date` objects are the same if their year, month, and date are the same).
-2. To guarantee can only be created with correct values. That means that no invalid value types should be able to exist.
+2. To guarantee that objects can only be created with correct values. That means that no invalid value types should be able to exist.
 
 The inspiration for the value object part is taken from [Martin Fowler's discussion of the matter](https://martinfowler.com/bliki/ValueObject.html).
 It's implemented on top of the [Contracts gem](http://egonschiele.github.io/contracts.ruby/) that allows us to define the accepted values for each attribute.
 
 In other words it's much like this GIF: 
-![Contract + Value Object => ContractValueObject](https://media3.giphy.com/media/BHeCjdyGJck6c/source.gif)
+![Contract + Value Object => ContractValueObject](https://media3.giphy.com/media/BHeCjdyGJck6c/source.gif =250x)
 
 ## Installation
 
