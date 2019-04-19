@@ -14,7 +14,7 @@ class Truck < ContractValueObject
     )
 
     defaults(
-      size: :s,
+      size: :m,
     )
   end
 
@@ -23,6 +23,28 @@ class Truck < ContractValueObject
     color: Enum[:red, :white, :blue],
     model: String,
   )
+
+  private
+
+  def wheels=(wheels)
+    # transform all the inputs into wheels
+    if wheels.all? { |wheel| wheel.is_a?(Symbol) }
+      wheels = wheels.map do |size|
+        Wheel.new(size: size)
+      end
+    end
+
+    # make sure that wheels behave rationally
+    raise ArgumentError, 'All of the wheels should be the same size' if wheels.uniq(&:size).count != 1
+
+    @wheels = wheels
+  end
 end
+
+TRUCK = Truck.new(
+  wheels: [Truck::Wheel.new, Truck::Wheel.new, Truck::Wheel.new, Truck::Wheel.new],
+  color: :red,
+  model: 'Ford F150',
+)
 
 IRB.start
