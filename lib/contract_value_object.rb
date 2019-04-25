@@ -1,6 +1,7 @@
 require 'contracts'
 require 'contract_value_object/definition_error'
 require 'contract_value_object/error_formatter'
+require 'contract_value_object/awesome_print'
 
 class ContractValueObject
   include Contracts
@@ -119,9 +120,5 @@ class ContractValueObject
 
   def inspect
     "#{self.class} #{to_h.inspect}"
-  end
-
-  def ai(options = {})
-    "#{self.class} #{to_h.ai(options)}"
   end
 end

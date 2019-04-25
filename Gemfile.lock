@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    contract_value_object (0.0.3)
+    contract_value_object (0.0.4)
       contracts
 
 GEM
@@ -17,7 +17,7 @@ GEM
       rspec-mocks (~> 3.8.0)
     rspec-core (3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-expectations (3.8.2)
+    rspec-expectations (3.8.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-mocks (3.8.0)
@@ -30,10 +30,10 @@ PLATFORMS
 
 DEPENDENCIES
   awesome_print
-  bundler (~> 1.17.3)
+  bundler (~> 1.15.4)
   contract_value_object!
   rake (~> 10.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.17.3
+   1.15.4
