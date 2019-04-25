@@ -2,10 +2,9 @@
 
 require 'irb'
 require 'irb/completion'
+require 'awesome_print'
 require 'bundler/setup'
 Bundler.require
-
-require 'contract_value_object'
 
 class Truck < ContractValueObject
   class Wheel < ContractValueObject
@@ -19,9 +18,9 @@ class Truck < ContractValueObject
   end
 
   attributes(
-    wheels: ArrayOf[Wheel],
     color: Enum[:red, :white, :blue],
     model: String,
+    wheels: ArrayOf[Wheel],
   )
 
   private
