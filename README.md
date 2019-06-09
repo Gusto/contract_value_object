@@ -108,7 +108,7 @@ ContractValueObject::DefinitionError:
 
 Run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local enbironment, run `bundle exec rake install`. 
+To install this gem onto your local environment, run `bundle exec rake install`. 
 To release a new version:
 1. `rake release`
 
