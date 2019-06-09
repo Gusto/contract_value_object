@@ -125,6 +125,33 @@ RSpec.describe ContractValueObject do
         it { is_expected.to have_attributes(foo: :truck) }
       end
     end
+
+    context 'when a contract value object includes another contract value object as an attribute' do
+      let(:klass) do
+        some_other_klass = other_klass
+        Class.new(ContractValueObject) do
+          attributes(gear: some_other_klass)
+
+          define_method(:gear=) do |value|
+            @gear = some_other_klass.new(size: value)
+          end
+        end
+      end
+      let(:other_klass) { Class.new(ContractValueObject) { attributes(size: Contracts::Enum[:s, :m, :l]) } }
+
+      let(:attributes) { { gear: gear } }
+      let(:gear) { :m }
+
+      it { expect { subject }.to_not raise_error }
+
+      context 'but the child object is broken' do
+        let(:gear) { :freeto }
+
+        it do
+          expect { subject }.to raise_error(ContractValueObject::DefinitionError)
+        end
+      end
+    end
   end
 
   describe '#==' do
@@ -190,5 +217,47 @@ RSpec.describe ContractValueObject do
     it do
       expect(subject).to eq klass.new(attributes).hash
     end
+  end
+
+  describe '#equal?' do
+    subject { myself.equal?(other) }
+
+    let(:klass) do
+      attribute_hash = definition
+      Class.new(described_class) do
+        attributes attribute_hash
+      end
+    end
+    let(:definition) { { value: String } }
+
+    let(:myself) { klass.new(myself_attributes) }
+    let(:myself_attributes) { { value: 'foo' } }
+
+    context 'when the attributes are the same' do
+      let(:other) { klass.new(other_attributes) }
+      let(:other_attributes) { myself_attributes }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when the other and myself are the same reference' do
+      let(:other) { myself }
+      it { is_expected.to be true }
+    end
+  end
+
+  describe '#inspect' do
+    subject { klass.new(attributes).inspect }
+
+    let(:klass) do
+      attribute_hash = definition
+      Class.new(described_class) do
+        attributes attribute_hash
+      end
+    end
+    let(:definition) { { value: String } }
+    let(:attributes) { { value: 'foo' } }
+
+    it { is_expected.to match(/\A#<Class:.*?> {:value=>"foo"}\Z/) }
   end
 end

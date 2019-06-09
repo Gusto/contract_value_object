@@ -1,3 +1,5 @@
 .idea/
 .rspec_status
 pkg/
+coverage/
+.DS_Store

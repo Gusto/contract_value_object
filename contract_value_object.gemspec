@@ -12,8 +12,6 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Validate that your objects have the right inputs.}
   spec.license       = 'MIT'
 
-  spec.metadata['allowed_push_host'] = 'https://gemstash.zp-int.com/private'
-
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
@@ -27,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'awesome_print'
+  spec.add_development_dependency 'simplecov'
 end
