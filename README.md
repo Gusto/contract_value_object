@@ -8,7 +8,8 @@ The inspiration for the value object part is taken from [Martin Fowler's discuss
 It's implemented on top of the [Contracts gem](http://egonschiele.github.io/contracts.ruby/) that allows us to define the accepted values for each attribute.
 
 In other words it's much like this GIF: 
-![Contract + Value Object => ContractValueObject](https://media3.giphy.com/media/BHeCjdyGJck6c/source.gif)
+
+<img width="400" src="https://media3.giphy.com/media/BHeCjdyGJck6c/source.gif">
 
 ## Installation
 
@@ -107,13 +108,13 @@ ContractValueObject::DefinitionError:
 
 Run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local mcontract_value_objectine, run `bundle exec rake install`. 
+To install this gem onto your local environment, run `bundle exec rake install`. 
 To release a new version:
 1. `rake release`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Gusto/. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Gusto/contract_value_object. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

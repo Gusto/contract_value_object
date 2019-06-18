@@ -1,4 +1,7 @@
 require 'bundler/setup'
+require 'simplecov'
+SimpleCov.start
+
 require 'contract_value_object'
 
 RSpec.configure do |config|
