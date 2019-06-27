@@ -1,4 +1,4 @@
-# Contract Value Object
+# Contract Value Object ![status](https://travis-ci.org/Gusto/contract_value_object.svg?branch=master)
 
 Contract value object are designed for two purposes:
 1. To create objects that act like values (in the same way that two ruby `Date` objects are the same if their year, month, and date are the same).
