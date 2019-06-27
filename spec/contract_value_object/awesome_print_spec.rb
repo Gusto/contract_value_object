@@ -7,6 +7,6 @@ RSpec.describe ContractValueObject do
   describe '#ai' do
     subject { klass.new(utencil: :spoon).ai }
 
-    it { is_expected.to match(/#<Class:.*?> {\n\s+:utencil => :spoon\n}/) }
+    it { is_expected.to match(/#<Class:.*?> {\n\s+:utencil.*? => .*?:spoon.*?\n}/) }
   end
 end
