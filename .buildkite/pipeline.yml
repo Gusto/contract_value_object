@@ -1,6 +1,0 @@
-steps:
-  - name: ':rspec: RSpec'
-    command:
-      - docker build . -t contract_value_object:$BUILDKITE_BUILD_ID
-      - docker run -t contract_value_object:$BUILDKITE_BUILD_ID bundle exec rspec
-    timeout_in_minutes: 10
